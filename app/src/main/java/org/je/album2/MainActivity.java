@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -22,16 +23,20 @@ public class MainActivity extends AppCompatActivity {
 
     private List<String> buckets;
     private List<String> bIDs;
-    private List<String> uris_String = null;
-    private List<Uri> uris = null;
-    private int[] count = new int[10];
+    private List<String> uris_String;
+    private List<Uri> uris;
+    //private int[] count = new int[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        if (PermissionUtils.isStoragePermissionsGranted(this)) {
+            init();
+        } else {
+            PermissionUtils.requestPermissions(this, EXTERNAL_STORAGE_PERMISSIONS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
     }
 
     public List<Uri> fetchAllImages() {
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     tmp = bID;
                     i++;
                 }
-                count[i]++;
+                //count[i]++;
 
                 Uri imageUri = Uri.parse(filePath);
                 result.add(imageUri);
@@ -127,13 +132,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             uris_String = new ArrayList<String>();
-            for (int i = 0; i < uris_String.size(); i++) {
+            for (int i = 0; i < t_uris.size(); i++) {
                 uris_String.add(t_uris.get(i).toString());
             }
 
             Intent intent = new Intent(this, FolderViewActivity.class);
             intent.putStringArrayListExtra("BucketName", (ArrayList<String>) t_bName);
-            intent.putStringArrayListExtra("ImageUris", (ArrayList<String>) uris_String);
+            intent.putStringArrayListExtra("ImageURIs", (ArrayList<String>) uris_String);
+
             this.startActivity(intent);
 
             //ImageView imgView = (ImageView) findViewById(R.id.imageView3);

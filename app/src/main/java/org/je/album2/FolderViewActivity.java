@@ -1,9 +1,9 @@
 package org.je.album2;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,7 +18,7 @@ public class FolderViewActivity extends AppCompatActivity {
     GridView gv;
 
     private List<String> bucket_Names;
-    private List<String> uri_Names;
+    private List<String> uri_String;
     private List<Uri> uris;
 
     @Override
@@ -26,16 +26,16 @@ public class FolderViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_folderview);
 
-        parse_intent();
-        buildContent();
+        parse_Intent();
+        build_Content();
     }
 
-    private void parse_intent() {
+    private void parse_Intent() {
         bucket_Names = getIntent().getStringArrayListExtra("BucketName");
-        uri_Names = getIntent().getStringArrayListExtra("ImageUris");
+        uri_String = getIntent().getStringArrayListExtra("ImageURIs");
         uris = new ArrayList<Uri>();
-        for (int i = 0; i < uri_Names.size(); i++) {
-            uris.add(i, Uri.parse(uri_Names.get(i)));
+        for (int i = 0; i < uri_String.size(); i++) {
+            uris.add(i, Uri.parse(uri_String.get(i)));
         }
 
         /**
@@ -45,9 +45,9 @@ public class FolderViewActivity extends AppCompatActivity {
          **/
     }
 
-    private void buildContent() {
+    private void build_Content() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
