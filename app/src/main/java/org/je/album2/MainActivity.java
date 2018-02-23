@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -98,15 +97,6 @@ public class MainActivity extends AppCompatActivity {
             query();
 
             /**
-            for (int i = 0; i < buckets.size(); i++) {
-                Log.println(Log.DEBUG, "SHOW_FILES_NAME",
-                        "Bucket ID: " + bIDs.get(i).toString()
-                                + ", Folder:" + buckets.get(i).toString()
-                                + ", Path: " + uris.get(i).toString()
-                                + ", Count: " + count[0] + " " + count[1] + " " + count[2]);
-            }
-            //Log.println(Log.DEBUG, "hello", uris.get(0).toString());
-
             ImgAdapter adapter = new ImgAdapter(this, uris);
             GridView gv = (GridView) findViewById(R.id.gridview);
             gv.setAdapter(adapter);
@@ -137,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(this, FolderViewActivity.class);
-            intent.putStringArrayListExtra("BucketName", (ArrayList<String>) t_bName);
-            intent.putStringArrayListExtra("ImageURIs", (ArrayList<String>) uris_String);
+            //intent.putStringArrayListExtra("BucketName", (ArrayList<String>) t_bName);
+            //intent.putStringArrayListExtra("ImageURIs", (ArrayList<String>) uris_String);
 
             this.startActivity(intent);
 
