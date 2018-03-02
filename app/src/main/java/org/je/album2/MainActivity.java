@@ -7,11 +7,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.je.album2.NotUsed.ImgAdapter;
 import org.je.album2.Util.PermissionUtils;
 
 import java.util.ArrayList;
@@ -36,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             PermissionUtils.requestPermissions(this, EXTERNAL_STORAGE_PERMISSIONS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
+
+        Toolbar mainToolbar = (Toolbar) findViewById(R.id.my_main_toolbar);
+        mainToolbar.setTitle("Simple Album");
+        setSupportActionBar(mainToolbar);
+        mainToolbar.getBackground().setAlpha(0);
+        //setSupportActionBar(mainToolbar);
+
+
+
     }
 
     public List<Uri> fetchAllImages() {
@@ -141,36 +154,5 @@ public class MainActivity extends AppCompatActivity {
 
     public void query() {
         uris = fetchAllImages();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case EXTERNAL_STORAGE_PERMISSIONS:
-                boolean gotPermission = grantResults.length > 0;
-
-                for (int result : grantResults) {
-                    gotPermission &= result == PackageManager.PERMISSION_GRANTED;
-                }
-
-                if (gotPermission) {
-                    query();
-                    //Log.println(Log.DEBUG, "hello", uris.get(0).toString());
-
-                    ImgAdapter adapter = new ImgAdapter(this, uris);
-                    GridView gv = (GridView) findViewById(R.id.gridview);
-                    gv.setAdapter(adapter);
-
-                    //ImageView imgView = (ImageView) findViewById(R.id.imageView3);
-                    //imgView.setImageURI(Uri.parse(uris.get(0).toString()));
-                } else {
-                    Toast.makeText(MainActivity.this, "Storage permission is denied", Toast.LENGTH_LONG).show();
-                    finish();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        }
     }
 }

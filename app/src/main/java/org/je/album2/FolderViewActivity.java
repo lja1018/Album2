@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.GridView;
+import android.support.v7.widget.Toolbar;
 
 import org.je.album2.Util.FetchImageUtils;
 
@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FolderViewActivity extends AppCompatActivity {
-
-    RecyclerAdapter rcAdapter;
-    GridView gv;
-
     private List<Uri> uris;
     private List<String> bucket_Names;
     private List<String> bucket_IDs;
@@ -26,6 +22,11 @@ public class FolderViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_folderview);
+
+        Toolbar folderToolbar = (Toolbar) findViewById(R.id.my_folder_toolbar);
+        folderToolbar.setTitle("Simple Album");
+        folderToolbar.getBackground().setAlpha(200);
+        setSupportActionBar(folderToolbar);
 
         parse_Intent();
         build_Content();
@@ -48,10 +49,10 @@ public class FolderViewActivity extends AppCompatActivity {
     }
 
     private void build_Content() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.folder_recyclerview);
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new RecyclerAdapter(getApplicationContext(), bucket_Names, bucket_IDs, uris, R.layout.activity_folderview));
+        recyclerView.setAdapter(new FolderRecyclerAdapter(getApplicationContext(), bucket_Names, bucket_IDs, uris, R.layout.activity_folderview));
     }
 }

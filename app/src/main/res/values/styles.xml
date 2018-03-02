@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="JE_Album_Action" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimary">#000000</item>
+        <item name="android:colorPrimaryDark">#00992f</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
 </resources>

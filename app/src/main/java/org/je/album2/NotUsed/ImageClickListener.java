@@ -1,12 +1,9 @@
-package org.je.album2;
+package org.je.album2.NotUsed;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
-import android.widget.GridView;
-
-import java.util.List;
 
 /**
  * Created by JE on 2018-02-08(008).

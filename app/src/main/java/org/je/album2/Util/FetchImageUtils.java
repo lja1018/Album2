@@ -2,6 +2,7 @@ package org.je.album2.Util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class FetchImageUtils {
         return cursor.getCount();
     }
 
-    public static List<List<String>> get_Buckets(Context context) {
+    public static List<List<String>> get_Buckets (Context context) {
         String[] projection = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
@@ -79,7 +80,7 @@ public class FetchImageUtils {
         return result;
     }
 
-    public static List<List<String>> get_DistinctBuckets(Context context) {
+    public static List<List<String>> get_DistinctBuckets (Context context) {
         String[] projection = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
@@ -146,6 +147,41 @@ public class FetchImageUtils {
         result.add(distinct_filePaths);
         result.add(distinct_buckets);
         result.add(distinct_bucketsID);
+
+        return result;
+    }
+
+    public static List<Uri> get_Content (Context context, String ID) {
+        String[] mClause = { "" };
+        mClause[0] = ID;
+        String[] projection = {
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.BUCKET_ID
+        };
+
+        Cursor imageCursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                MediaStore.Images.Media.BUCKET_ID + " = ?",
+                mClause,
+                null);
+
+        ArrayList<Uri> result = new ArrayList<Uri>(imageCursor.getCount());
+        int dataColumnIndex = imageCursor.getColumnIndex(projection[0]);
+
+        int i = -1;
+        if (imageCursor == null) {
+            // Error 발생
+            // 적절하게 handling 해주세요
+        } else if (imageCursor.moveToFirst()) {
+            do {
+                String filePath = imageCursor.getString(dataColumnIndex);
+                result.add(Uri.parse(filePath));
+            } while(imageCursor.moveToNext());
+        } else {
+            // imageCursor가 비었습니다.
+        }
+        imageCursor.close();
 
         return result;
     }

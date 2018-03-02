@@ -1,10 +1,12 @@
-package org.je.album2;
+package org.je.album2.NotUsed;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import org.je.album2.R;
 
 public class ImageActivity extends AppCompatActivity {
 

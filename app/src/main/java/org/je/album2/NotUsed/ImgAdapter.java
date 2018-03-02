@@ -1,4 +1,4 @@
-package org.je.album2;
+package org.je.album2.NotUsed;
 
 import android.content.Context;
 import android.graphics.Bitmap;
